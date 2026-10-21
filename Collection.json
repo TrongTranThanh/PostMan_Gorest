@@ -141,6 +141,52 @@
           "response": []
         },
         {
+          "name": "Request6_NewUserSameEmail",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 422 Unprocessable Entity\", function () {\r",
+                  "    pm.response.to.have.status(422);\r",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Duplicate Email Test\",\r\n  \"gender\": \"female\",\r\n  \"email\": \"{{email}}\",\r\n  \"status\": \"active\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "https://gorest.co.in/public/v2/users",
+              "protocol": "https",
+              "host": [
+                "gorest",
+                "co",
+                "in"
+              ],
+              "path": [
+                "public",
+                "v2",
+                "users"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
           "name": "Request4_DeleteUser",
           "event": [
             {
@@ -243,52 +289,6 @@
             "body": {
               "mode": "raw",
               "raw": "{\r\n  \"name\": \"No Auth User\",\r\n  \"gender\": \"male\",\r\n  \"email\": \"noauth_test123@gmail.com\",\r\n  \"status\": \"active\"\r\n}",
-              "options": {
-                "raw": {
-                  "language": "json"
-                }
-              }
-            },
-            "url": {
-              "raw": "https://gorest.co.in/public/v2/users",
-              "protocol": "https",
-              "host": [
-                "gorest",
-                "co",
-                "in"
-              ],
-              "path": [
-                "public",
-                "v2",
-                "users"
-              ]
-            }
-          },
-          "response": []
-        },
-        {
-          "name": "Request6_NewUserSameEmail",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "pm.test(\"Status code is 422 Unprocessable Entity\", function () {\r",
-                  "    pm.response.to.have.status(422);\r",
-                  "});"
-                ],
-                "type": "text/javascript",
-                "packages": {},
-                "requests": {}
-              }
-            }
-          ],
-          "request": {
-            "method": "POST",
-            "header": [],
-            "body": {
-              "mode": "raw",
-              "raw": "{\r\n  \"name\": \"Duplicate Email Test\",\r\n  \"gender\": \"female\",\r\n  \"email\": \"{{email}}\",\r\n  \"status\": \"active\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
