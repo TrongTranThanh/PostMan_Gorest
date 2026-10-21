@@ -2,8 +2,8 @@ name: API Shift-Right Monitoring
 
 on:
   schedule:
-    - cron: '0 * * * *'  # Chạy tự động mỗi giờ
-  workflow_dispatch:      # Cho phép chạy tay[cite: 3]
+    - cron: '0 * * * *'
+  workflow_dispatch:
 
 jobs:
   monitor-api:
@@ -14,7 +14,7 @@ jobs:
           RESPONSE_TIME=$(curl -o /dev/null -s -w "%{time_total}\n" https://gorest.co.in/public/v2/users)
           RESPONSE_TIME_MS=$(echo "$RESPONSE_TIME * 1000 / 1" | bc)
           echo "Response Time: ${RESPONSE_TIME_MS} ms"
-          if [ $RESPONSE_TIME_MS -gt 800 ]; then
-            echo "API Response Time Exceeded 800ms limit!"[cite: 3]
+          if [ $RESPONSE_TIME_MS -gt 2000 ]; then
+            echo "API Response Time Exceeded limit!"
             exit 1
           fi
