@@ -1,28 +1,22 @@
-name: API Automation Testing
+name: Production Monitor
 
 on:
-  push:
-    branches: [ "main", "master" ]
-  workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # Tự động kiểm tra mỗi 1 giờ
+  workflow_dispatch:      # Cho phép bấm chạy bằng tay trên giao diện
 
 jobs:
-  test-api:
+  monitor-api:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
+      - name: Checkout mã nguồn
+        uses: actions/checkout@v4
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18'
+      - name: Cài đặt Postman CLI
+        run: curl -o- "https://dl-cli.pstmn.io/install/linux64.sh" | sh
 
-      - name: Install Newman
-        run: npm install -g newman
+      - name: Đăng nhập Postman
+        run: postman login --with-api-key ${{ secrets.Gorest_key }}
 
-      - name: Run Postman Tests with Newman
-        run: |
-          newman run Collection.json \
-            -e Environment.json \
-            -d users.csv \
-            --env-var "token=${{ secrets.GOREST_TOKEN }}"
+      - name: Chạy kịch bản Monitor trực tiếp từ Cloud
+        run: postman collection run "59052422-c6625421-43bc-4330-a69d-5c2a7222e36d"
