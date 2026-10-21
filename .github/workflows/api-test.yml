@@ -1,0 +1,27 @@
+name: API Automation Testing
+
+on:
+  push:
+    branches: [ "main", "master" ]
+
+jobs:
+  test-api:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Newman
+        run: npm install -g newman
+
+      - name: Run Postman Tests with Newman
+        run: |
+          newman run Collection.json \
+            -e Environment.json \
+            -d users.csv \
+            --env-var "token=${{ secrets.GOREST_TOKEN }}"
